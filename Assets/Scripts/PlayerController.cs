@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     // Movement direction vector
     private Vector3 direction;
 
+    // Gravitational force applied to the player and force for jumping
     public float gravity = 9.81f * 2f;
     public float jumpForce = 8f;
 
