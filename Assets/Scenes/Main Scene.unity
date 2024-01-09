@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc26cc47cdb9ee049b02a25b08e2f9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1379604566}
   initialGameSpeed: 5
   gameSpeedIncrease: 0.1
 --- !u!4 &100928594

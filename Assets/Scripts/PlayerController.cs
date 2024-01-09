@@ -35,23 +35,38 @@ public class PlayerController : MonoBehaviour
         // Apply gravity to the player's vertical movement
         direction += Vector3.down * gravity * Time.deltaTime;
 
-        // Check if player is grounded
-        if (character.isGrounded)
+        // Check if the game is not over to allow player input
+        if (!GameManager.Instance.isGameOver)
         {
-            // Reset vertical movement when grounded and set up animation
-            direction = Vector3.down;
-            animator.SetBool("isGrounded", true);
-
-            // Check for jump input
-            if (Input.GetButtonDown("Jump"))
+            // Check if player is grounded
+            if (character.isGrounded)
             {
-                // Apply upward force for jumping and set up animation
-                direction = Vector3.up * jumpForce;
-                animator.SetBool("isGrounded", false);
+                // Reset vertical movement when grounded and set up animation
+                direction = Vector3.down;
+                animator.SetBool("isGrounded", true);
+
+                // Check for jump input
+                if (Input.GetButtonDown("Jump"))
+                {
+                    // Apply upward force for jumping and set up animation
+                    direction = Vector3.up * jumpForce;
+                    animator.SetBool("isGrounded", false);
+                }
             }
         }
 
         // Move the character based on the calculated direction
         character.Move(direction * Time.deltaTime);
+    }
+
+    // Triggered when colliding with other colliders
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the collider is tagged as an obstacle
+        if (other.CompareTag("Obstacle"))
+        {
+             // Trigger the GameOver method in the GameManager
+            GameManager.Instance.GameOver();
+        }
     }
 }
