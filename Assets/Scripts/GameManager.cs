@@ -1,13 +1,20 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     // Animator component reference
-    public Animator animator; 
+    public Animator animator;
+
+    // UI elementsz to display game over text and retry button
+    public TextMeshProUGUI gameOverText;
+    public Button retryButton;
 
     // Singleton instance of the GameManager
     public static GameManager Instance { get; private set; }
 
+    // Reference to the PlayerController and the ObstacleGenerator
     private PlayerController player;
     private ObstacleGenerator spawner;
 
@@ -57,8 +64,11 @@ public class GameManager : MonoBehaviour
     }
 
     // Initialize a new game
-    private void NewGame()
+    public void NewGame()
     {
+        // Deactivate the player to reset animation
+        player.gameObject.SetActive(false);
+
         // Find all existing ObstacleController instances and destroy them
         ObstacleController[] obstacles = FindObjectsOfType<ObstacleController>();
         foreach (var obstacle in obstacles)
@@ -74,6 +84,9 @@ public class GameManager : MonoBehaviour
         // Activate the player and obstacle spawner
         player.gameObject.SetActive(true);
         spawner.gameObject.SetActive(true);
+        //
+        gameOverText.gameObject.SetActive(false);
+        retryButton.gameObject.SetActive(false);
 
         // Reset the game over and dead animation state
         isGameOver = false;
@@ -90,9 +103,11 @@ public class GameManager : MonoBehaviour
         // Set up the death animation
         animator.SetBool("isDead", true);
 
-        // Deactivate the player (remove //) and obstacle spawner
-        // player.gameObject.SetActive(false);
+        // Deactivate the obstacle spawner
         spawner.gameObject.SetActive(false);
+        //
+        gameOverText.gameObject.SetActive(true);
+        retryButton.gameObject.SetActive(true);
 
         // Update the game over state
         isGameOver = true;
