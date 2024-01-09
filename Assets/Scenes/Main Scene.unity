@@ -459,7 +459,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -641902895
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6ad9a02dc7626fa4e9f3499d50e55b50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -527,11 +527,73 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1955551916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955551918}
+  - component: {fileID: 1955551917}
+  m_Layer: 0
+  m_Name: Obstacle Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1955551917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955551916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e8f1180ea3f274a9ded0d74281a796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - prefab: {fileID: 5401799770267756767, guid: 2d176b91b816a1944b4fe325adc177b1, type: 3}
+    spawnChance: 0.1
+  - prefab: {fileID: 3419006680637429881, guid: 36fe842ebb6ef8e419ead04caff43b1a, type: 3}
+    spawnChance: 0.2
+  - prefab: {fileID: 3153885212030253380, guid: 52486dab53f8e9142bd8698c960b403f, type: 3}
+    spawnChance: 0.18
+  - prefab: {fileID: 4603728557850845179, guid: 6843bd9c406d6c14588dcad2e129af29, type: 3}
+    spawnChance: 0.16
+  - prefab: {fileID: 5789982211557088683, guid: be05794699383ce45a5d280b0f2b2bcb, type: 3}
+    spawnChance: 0.14
+  - prefab: {fileID: 7683904388735403997, guid: 260cb80c0a4bbc1439ddb859cbc050b7, type: 3}
+    spawnChance: 0.12
+  - prefab: {fileID: 1347053020272045377, guid: 74805f56aa9346f4f8080fd8b2838253, type: 3}
+    spawnChance: 0.1
+  minSpawnRate: 1
+  maxSpawnRate: 2
+--- !u!4 &1955551918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955551916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 100928594}
   - {fileID: 519420032}
-  - {fileID: 1214712408}
   - {fileID: 1379604568}
+  - {fileID: 1955551918}
+  - {fileID: 1214712408}

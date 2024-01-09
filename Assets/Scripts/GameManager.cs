@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Called on the frame when a script is enabled
+    // Called when the script instance is being loaded
     private void Start()
     {
         NewGame();
