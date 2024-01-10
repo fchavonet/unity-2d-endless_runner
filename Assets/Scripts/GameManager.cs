@@ -77,11 +77,20 @@ public class GameManager : MonoBehaviour
 
         // Initialize the "isGameStarted" animator parameter to false.
         animator.SetBool("isGameStarted", false);
+
+        // Set up the game speed increase to 0
+        gameSpeedIncrease = 0;
+
+        // Deactivate the obstacle spawner
+        spawner.gameObject.SetActive(false);
     }
 
     // Initialize a new game
     public void NewGame()
     {
+        // Set up the game speed increase to default
+        gameSpeedIncrease = 0.1f;
+        
         // Deactivate the player to reset animation
         player.gameObject.SetActive(false);
 
