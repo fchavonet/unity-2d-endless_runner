@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour
     // Animator component reference
     public Animator animator;
 
-    // UI elementsz to display game over text and retry button
+    // UI elementsz
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI hiscoreText;
     public Button retryButton;
 
     // Singleton instance of the GameManager
@@ -24,6 +26,9 @@ public class GameManager : MonoBehaviour
 
     // Current game speed
     public float gameSpeed { get; private set; }
+
+    // Current player score in the game
+    public float score;
 
     // Variable to track the game state
     public bool isGameOver = false;
@@ -78,19 +83,27 @@ public class GameManager : MonoBehaviour
 
         // Set the initial game speed
         gameSpeed = initialGameSpeed;
+
+        // Reset the score
+        score = 0f;
+
         // Enable the GameManager script
         enabled = true;
 
         // Activate the player and obstacle spawner
         player.gameObject.SetActive(true);
         spawner.gameObject.SetActive(true);
-        //
+        
+        // Hide game over UI elements
         gameOverText.gameObject.SetActive(false);
         retryButton.gameObject.SetActive(false);
 
         // Reset the game over and dead animation state
         isGameOver = false;
         animator.SetBool("isDead", false);
+
+        // Update the high score display
+        UpdateHiscore();
     }
 
     // Triggered when the game is over
@@ -111,6 +124,9 @@ public class GameManager : MonoBehaviour
 
         // Update the game over state
         isGameOver = true;
+
+        // Update the high score display
+        UpdateHiscore();
     }
 
     // Called every frame
@@ -118,5 +134,25 @@ public class GameManager : MonoBehaviour
     {
         // Increase the game speed over time
         gameSpeed += gameSpeedIncrease * Time.deltaTime;
+
+        // Update the score based on the current game speed
+        score += gameSpeed * Time.deltaTime;
+        scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+    }
+
+    private void UpdateHiscore()
+    {
+        // Retrieve the current high score from player preferences
+        float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
+
+        // If the current score is higher than the stored high score, update it
+        if (score > hiscore)
+        {
+            hiscore = score;
+            PlayerPrefs.SetFloat("hiscore", hiscore);
+        }
+
+        // Update the UI with the high score
+        hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
     }
 }
