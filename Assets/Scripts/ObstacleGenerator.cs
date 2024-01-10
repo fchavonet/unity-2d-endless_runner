@@ -18,6 +18,9 @@ public class ObstacleGenerator : MonoBehaviour
     public float minSpawnRate = 1f;
     public float maxSpawnRate = 2f;
 
+    // Variable to store the last spawned object
+    private GameObject lastSpawnedObject;
+
     // Called when the script instance is being loaded and enabled
     private void OnEnable()
     {
@@ -44,9 +47,20 @@ public class ObstacleGenerator : MonoBehaviour
             // Check if the generated spawn chance is less than the object's spawn chance
             if (spawnChance < obj.spawnChance)
             {
+                // Check if the selected object is the same as the last spawned object
+                if (lastSpawnedObject != null && obj.prefab == lastSpawnedObject)
+                {
+                    // If it's the same, skip this iteration and generate a new random spawn chance
+                    Spawn();
+                    return;
+                }
+                
                 // Instantiate the chosen obstacle prefab and position it based on the generator's position
                 GameObject obstacle = Instantiate(obj.prefab);
                 obstacle.transform.position += transform.position;
+
+                // Update the last spawned object
+                lastSpawnedObject = obj.prefab;
 
                 // Exit the loop after spawning one object
                 break;
