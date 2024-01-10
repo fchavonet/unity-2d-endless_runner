@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     // Movement direction vector
     private Vector3 direction;
 
+    [Space(10)]
     // Gravitational force applied to the player and force for jumping
     public float gravity = 9.81f * 2f;
     public float jumpForce = 8f;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isGrounded", true);
 
                 // Check for jump input
-                if (Input.GetButtonDown("Jump"))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     // Apply upward force for jumping and set up animation
                     direction = Vector3.up * jumpForce;
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
         // Check if the collider is tagged as an obstacle
         if (other.CompareTag("Obstacle"))
         {
-             // Trigger the GameOver method in the GameManager
+            // Trigger the GameOver method in the GameManager
             GameManager.Instance.GameOver();
         }
     }
