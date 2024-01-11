@@ -33,6 +33,13 @@ public class PlayerController : MonoBehaviour
     // Called every frame
     private void Update()
     {
+        // Check for Esc key press to quit the game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+            return;  // Stop further processing in Update() if the game is quitting
+        }
+
         // Apply gravity to the player's vertical movement
         direction += Vector3.down * gravity * Time.deltaTime;
 
@@ -56,6 +63,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+         // Check if the game is over
+        if (GameManager.Instance.isGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                // Call the NewGame method to initialize the game
+                GameManager.Instance.NewGame();
+            }
+        }
+
         // Move the character based on the calculated direction
         character.Move(direction * Time.deltaTime);
     }
@@ -69,5 +86,20 @@ public class PlayerController : MonoBehaviour
             // Trigger the GameOver method in the GameManager
             GameManager.Instance.GameOver();
         }
+    }
+
+    // Method to quit the game
+    private void QuitGame()
+    {
+        // In a standalone build, this will close the game
+        // Note: In the editor, this will stop play mode
+        #if UNITY_STANDALONE
+        Application.Quit();
+        #endif
+
+        // In the editor, this will stop play mode
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }

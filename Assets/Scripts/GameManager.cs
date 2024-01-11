@@ -71,6 +71,10 @@ public class GameManager : MonoBehaviour
     // Called when the script instance is being loaded
     private void Start()
     {
+        // Hide the mouse cursor at the beginning of the game
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         // Find and store references to the PlayerController and ObstacleGenerator
         player = FindObjectOfType<PlayerController>();
         spawner = FindObjectOfType<ObstacleGenerator>();
@@ -154,13 +158,6 @@ public class GameManager : MonoBehaviour
             // Call GameStart() to check for the initial jump and start the game
             GameStart();
 
-            // Check for Esc key press to quit the game
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                QuitGame();
-                return;  // Stop further processing in Update() if the game is quitting
-            }
-
             // Increase the game speed over time
             gameSpeed += gameSpeedIncrease * Time.deltaTime;
 
@@ -176,15 +173,22 @@ public class GameManager : MonoBehaviour
         // Retrieve the current high score from player preferences
         float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
 
-        // If the current score is higher than the stored high score, update it
-        if (score > hiscore)
-        {
-            hiscore = score;
-            PlayerPrefs.SetFloat("hiscore", hiscore);
-        }
-
         // Update the UI with the high score
         hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+
+        // Check if the game is over before updating the high score
+        if (isGameOver)
+        {
+            // If the current score is higher than the stored high score, update it
+            if (score > hiscore)
+            {
+                hiscore = score;
+                PlayerPrefs.SetFloat("hiscore", hiscore);
+            }
+
+            // Update the UI with the high score
+            hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");
+        }
     }
 
     // Triggered when the game is over
@@ -209,20 +213,5 @@ public class GameManager : MonoBehaviour
 
         // Update the high score display
         UpdateHiscore();
-    }
-
-    // Method to quit the game
-    private void QuitGame()
-    {
-        // In a standalone build, this will close the game
-        // Note: In the editor, this will stop play mode
-        #if UNITY_STANDALONE
-        Application.Quit();
-        #endif
-
-        // In the editor, this will stop play mode
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #endif
     }
 }
